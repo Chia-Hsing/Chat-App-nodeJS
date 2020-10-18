@@ -12,6 +12,8 @@ html {
 
 input {
     font-size: 14px;
+    padding: 15px;
+    height: 10px;
 }
 
 body {
@@ -32,28 +34,30 @@ label {
 }
 
 input {
+    height: 50px;
     border: 1px solid #eeeeee;
-    padding: 12px;
     outline: none;
+    border-radius: 13px;
 }
 
 button {
     cursor: pointer;
     padding: 12px;
-    background: #7C5CBF;
+    background: #ccbe3e;
     border: none;
     color: white;
     font-size: 16px;
-    transition: background .3s ease;
+    transition: background 0.3s ease;
+    border-radius: 13px;
 }
 
 button:hover {
-    background: #6b47b8;
+    background: #ccbe3e;
 }
 
 button:disabled {
     cursor: default;
-    background: #7c5cbf94;
+    background: #ccbe3e;
 }
 
 /* Join Page Styles */
@@ -61,15 +65,15 @@ button:disabled {
 .centered-form {
     background: #333744;
     width: 100vw;
-    height: 100vh;   
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .centered-form__box {
-    box-shadow: 0px 0px 17px 1px #1D1F26;
-    background: #F7F7FA;
+    box-shadow: 0px 0px 17px 1px #1d1f26;
+    background: #f7f7fa;
     padding: 24px;
     width: 250px;
 }
@@ -92,9 +96,9 @@ button:disabled {
 .chat__sidebar {
     height: 100vh;
     color: white;
-    background: #333744;
-    width: 225px;
-    overflow-y: scroll
+    background: #d4d7e0;
+    width: 300px;
+    overflow-y: scroll;
 }
 
 /* Chat styles */
@@ -107,6 +111,7 @@ button:disabled {
 }
 
 .chat__messages {
+    max-width: 250px;
     flex-grow: 1;
     padding: 24px 24px 0 24px;
     overflow-y: scroll;
@@ -115,7 +120,7 @@ button:disabled {
 /* Message Styles */
 
 .message {
-    margin-bottom: 16px;   
+    margin-bottom: 16px;
 }
 
 .message__name {
@@ -125,12 +130,12 @@ button:disabled {
 }
 
 .message__meta {
-    color: #777;
-    font-size: 14px;
+    color: rgb(206, 204, 204);
+    font-size: 0.7em;
 }
 
 .message a {
-    color: #0070CC;
+    color: #020e18;
 }
 
 /* Message Composition Styles */
@@ -149,9 +154,9 @@ button:disabled {
 }
 
 .compose input {
-    border: 1px solid #eeeeee;
+    border: 1px solid #32323a;
     width: 100%;
-    padding: 12px;
+    padding: 15px;
     margin: 0 16px 0 0;
     flex-grow: 1;
 }
@@ -166,7 +171,7 @@ button:disabled {
     font-weight: 400;
     font-size: 22px;
     background: #2c2f3a;
-    padding: 24px;   
+    padding: 24px;
 }
 
 .list-title {
@@ -180,4 +185,14 @@ button:disabled {
     list-style-type: none;
     font-weight: 300;
     padding: 12px 24px 0 24px;
+}
+
+.message__content {
+    background-color: rgba(235, 229, 229, 0.76);
+    width: auto;
+    display: inline-block;
+    white-space: pre-line;
+    word-wrap: break-all;
+    padding: 7px 15px;
+    border-radius: 13px;
 }
