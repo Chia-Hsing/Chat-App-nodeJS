@@ -90,6 +90,7 @@ button:disabled {
 /* Chat Page Layout */
 
 .chat {
+    width: 100vw;
     display: flex;
 }
 
@@ -104,6 +105,7 @@ button:disabled {
 /* Chat styles */
 
 .chat__main {
+    width: 100%;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -111,7 +113,6 @@ button:disabled {
 }
 
 .chat__messages {
-    max-width: 250px;
     flex-grow: 1;
     padding: 24px 24px 0 24px;
     overflow-y: scroll;
