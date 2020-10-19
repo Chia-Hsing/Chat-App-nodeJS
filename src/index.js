@@ -4,6 +4,7 @@ const http = require('http')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
 const { getMessages } = require('./utils/messages')
+const { addUser, removeUser, getUser, getUserInRoom } = require('./utils/users')
 
 const app = express()
 const server = http.createServer(app)
@@ -17,14 +18,24 @@ const port = process.env.PORT || 3000
 io.on('connection', socket => {
     console.log('New websocket connection.')
 
-    socket.on('join', ({ username, room }) => {
-        socket.join(room)
+    socket.on('join', (options, callback) => {
+        const { error, user } = addUser({ id: socket.id, ...options })
 
-        socket.emit('message', getMessages('Welcome!'))
-        socket.broadcast.to(room).emit('message', getMessages(`${username} has joined!`))
+        if (error) {
+            return callback(error)
+        }
+
+        socket.join(user.room)
+
+        socket.emit('message', getMessages('Admin', 'Welcome!'))
+        socket.broadcast.to(user.room).emit('message', getMessages(user.username, `${user.username} has joined!`))
+        io.to(user.room).emit('roomData', { users: getUserInRoom(user.room), room: user.room })
+
+        callback()
     })
 
     socket.on('sendMessage', (msg, callback) => {
+        const user = getUser(socket.id)
         if (!msg) {
             return callback('Please say something...')
         }
@@ -34,21 +45,18 @@ io.on('connection', socket => {
             return callback('Profanity is not allowed!')
         }
 
-        io.emit('message', getMessages(msg))
+        io.emit('message', getMessages(user.username, msg))
         callback()
     })
 
-    // socket.on('sendLocation', (coords, callback) => {
-    //     io.emit(
-    //         'locationMessage',
-    //         getLocationMessages(`https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
-    //     )
-    //     callback()
-    // })
+    socket.on('disconnect', () => {
+        const user = removeUser(socket.id)
 
-    // socket.on('disconnect', () => {
-    //     io.emit('message', getMessages('A user has left.'))
-    // })
+        if (user) {
+            io.to(user.room).emit('message', getMessages('Admin', `${user.username} has left.`))
+            io.to(user.room).emit('roomData', { users: getUserInRoom(user.room), room: user.room })
+        }
+    })
 })
 
 server.listen(port, () => {
